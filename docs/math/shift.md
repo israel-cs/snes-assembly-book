@@ -12,7 +12,7 @@ Existem dois opcodes que deslocam bits para a esquerda ou direita.
 ASL e LSR podem afetar A ou um endereço, assim como INC e DEC. Aqui está um exemplo de ASL em ação:
 
 ```
-LDA #$02           ; Carregue o valor $02 em A
+LDA #$02           ; Carrega o valor $02 em A
 ASL A              ; Multipica A por 2
                    ; A agora é $04
 ```
@@ -20,7 +20,7 @@ ASL A              ; Multipica A por 2
 Isso é o que aparece na superfície. Quando você olha para os números em binário, porém, é assim que se parece:
 
 ```
-LDA #$02           ; Carregue o valor %00000010 em A
+LDA #$02           ; Carrega o valor %00000010 em A
 ASL A              ; Mude os bits para a esquerda uma vez
                    ; A agora é %00000100
 ```
@@ -29,8 +29,8 @@ Como você pode ver, o dígito '1' foi movido para a esquerda uma vez. É isso q
 O ASL também pode mover os bits em um endereço sem afetar A.
 
 ```
-LDA #$02           ; Carregue o valor $02 em A
-STA $00            ; Guarde isto no endereço $7E0000
+LDA #$02           ; Carrega o valor $02 em A
+STA $00            ; Armazene-o no endereço $7E0000
 ASL $00            ; Mude os bits $7E0000 para a esquerda uma vez
                    ; A ainda é $02, enquanto que $7E0000 agora é $04
 ```
@@ -38,7 +38,7 @@ ASL $00            ; Mude os bits $7E0000 para a esquerda uma vez
 Você também pode deslocar bits para a direita usando LSR.
 
 ```
-LDA #$02           ; Carregue o valor $ 02 em A
+LDA #$02           ; Carrega o valor $02 em A
 LSR A              ; Divida A por 2
                    ; A agora é $01
 ```
@@ -46,7 +46,7 @@ LSR A              ; Divida A por 2
 E quando você olha para ele no nível binário, em vez de hexadecimal:
 
 ```
-LDA #$02           ; Carregue o valor% 00000010 em A
+LDA #$02           ; Carrega o valor% 00000010 em A
 LSR A              ; Mude os bits para a direita uma vez
                    ; A agora é %00000001
 ```
@@ -55,21 +55,21 @@ Como você pode ver, o dígito '1' foi movido para a direita uma vez. É isso qu
 O LSR também pode mover bits em um endereço sem afetar A.
 
 ```
-LDA #$02           ; Carregue o valor $02 em A
-STA $00            ; Guarde isso no endereço $7E0000
+LDA #$02           ; Carrega o valor $02 em A
+STA $00            ; Armazene-o no endereço $7E0000
 LSR $00            ; Mude os bits de $7E0000 para a direita uma vez
                    ; A ainda é $02, enquanto que $7E0000 é agora $01
 ```
 
 ### Bordas e carry flag
-Você deve estar se perguntando o que acontece se você deslocar o bit `% 1000 0001` para a direita uma vez, usando LSR. O bit 7 está definido atualmente, mas não há nada para mudar para o bit 7. Ao mesmo tempo, o bit 0 também está definido, mas não tem para onde mudar. Quando isso acontecer, o flag carry recebe o bit 0. Ao mesmo tempo, o bit 7 será definido como 0.
+Você deve estar se perguntando o que acontece se você deslocar o bit `% 1000 0001` para a direita uma vez, usando LSR. O bit 7 está definido atualmente, mas não há nada para mudar para o bit 7. Ao mesmo tempo, o bit 0 também está definido, mas não tem para onde mudar. Quando isso acontecer, o carry flag recebe o bit 0. Ao mesmo tempo, o bit 7 será definido como 0.
 
-O inverso também é válido quando você muda '%1000 0001' para a esquerda uma vez, usando ASL. O flag carry recebe o bit 7, enquanto o bit 0 será definido para 0.
+O inverso também é válido quando você muda '%1000 0001' para a esquerda uma vez, usando ASL. O carry flag recebe o bit 7, enquanto o bit 0 será definido para 0.
 
-Aqui estão alguns exemplos de movimentação de bits para a carry flag.
+Aqui estão alguns exemplos de movimentação de bits para o carry flag.
 
 ```
-CLC                ; Garantindo carry (C) = 0
+CLC                ; Carry necessário (C) = 0
 LDA #$80           ; A = %1000 0000 | C = 0
 ASL A              ; A = %0000 0000 | C = 1
 ASL A              ; A = %0000 0000 | C = 0
@@ -116,7 +116,7 @@ Eles se comportam da mesma forma que LSR e ASL, exceto que estão usando o carry
 
 Aqui está um exemplo de ROL
 ```
-CLC                ; Garantindo carry (C) = 0
+CLC                ; Carry necessário (C) = 0
 LDA #$80           ; A = %1000 0000 | C = 0
 ROL A              ; A = %0000 0000 | C = 1
 ROL A              ; A = %0000 0001 | C = 0
@@ -147,7 +147,7 @@ A rotação também pode afetar os endereços, assim como ASL e LSR. Aqui está 
 ```
 CLC                ; Limpar o carry
 LDA #$02           ; Carregar o valor $02 em A
-STA $00            ; Guardar isso no endereço $7E0000
+STA $00            ; Armazene-o no endereço $7E0000
 ROR $00            ; Mudar os bits de $7E0000 para a direita uma vez
                    ; A ainda é $02, enquanto que $7E0000 agora é $01
                    ; e o carry ainda está limpo
@@ -155,4 +155,4 @@ ROR $00            ; Mudar os bits de $7E0000 para a direita uma vez
 
 ## Mudança de bit para o modo de 16 bits
 
-Todas as explicações e comportamentos anteriores também se aplicam ao deslocamento de 16 bits. É que você está trabalhando com 16 bits e a carry flag, não com 8 bits.
+Todas as explicações e comportamentos anteriores também se aplicam ao deslocamento de 16 bits. É que você está trabalhando com 16 bits e o carry flag, não com 8 bits.
